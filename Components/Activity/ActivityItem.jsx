@@ -1,17 +1,17 @@
 import { Platform, Pressable, Text, View } from "react-native";
 
-export default function ActivityItem({ item, onPress }) {
-  const formatDate = (raw) => {
-    if (!raw) return "";
+// Small helper for consistent detail rows
+const Detail = ({ label, value }) => (
+  <View style={{ marginBottom: 4 }}>
+    <Text style={{ fontSize: 12, color: "#777" }}>{label}</Text>
+    <Text style={{ fontSize: 14, fontWeight: "500", color: "#333" }}>
+      {value}
+    </Text>
+  </View>
+);
 
-    const date = new Date(raw);
-    return date.toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  };
-  // Colors for types
+export default function ActivityItem({ item, onPress }) {
+  // ---------------- COLORS ----------------
   const typeColors = {
     OnlineClass: "#4A90E2",
     Assignment: "#F5A623",
@@ -19,14 +19,13 @@ export default function ActivityItem({ item, onPress }) {
     Discussion: "#7B61FF",
   };
 
-  // Status colors
   const statusColors = {
     Upcoming: "#61894d",
     InProgress: "#F5A623",
     Completed: "#4CAF50",
   };
 
-  // NEXT ACTION ENGINE
+  // ---------------- NEXT ACTION ENGINE ----------------
   const nextActionMap = {
     OnlineClass: {
       Upcoming: "Join Class",
@@ -52,13 +51,69 @@ export default function ActivityItem({ item, onPress }) {
 
   const nextAction = nextActionMap[item.type][item.status];
 
+  // ---------------- LEARNER-RELEVANT DETAILS ----------------
+  const renderDetails = () => {
+    switch (item.type) {
+      case "OnlineClass":
+        return (
+          <>
+            <Detail label="Instructor" value={item.instructor} />
+            <Detail label="Duration" value={item.duration} />
+            <Detail label="Mode" value={item.mode} />
+          </>
+        );
+
+      case "Assignment":
+        return (
+          <>
+            <Detail label="Due Date" value={item.dueDate} />
+            <Detail label="Max Score" value={item.maxScore} />
+            <Detail
+              label="Attempts"
+              value={`${item.attemptsUsed}/${item.attemptsAllowed}`}
+            />
+          </>
+        );
+
+      case "Quiz":
+        return (
+          <>
+            <Detail label="Questions" value={item.questions} />
+            <Detail label="Time Limit" value={item.timeLimit} />
+            <Detail label="Attempts Left" value={item.attemptsLeft} />
+          </>
+        );
+
+      case "Discussion":
+        return (
+          <>
+            <Detail label="Replies" value={item.replies} />
+            <Detail label="Your Status" value={item.participationStatus} />
+          </>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  // ---------------- DATE FORMATTER ----------------
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    return new Date(dateString).toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
     <Pressable
       onPress={() => onPress(item)}
       style={{
         backgroundColor: "white",
         padding: 16,
-        marginBottom: 14,
+        marginBottom: 16,
         borderRadius: 12,
         shadowColor: "#000",
         shadowOpacity: 0.1,
@@ -66,7 +121,7 @@ export default function ActivityItem({ item, onPress }) {
         elevation: 3,
       }}
     >
-      {/* Top Row: Title + Type */}
+      {/* TITLE + TYPE */}
       <View
         style={{
           flexDirection: "row",
@@ -88,13 +143,13 @@ export default function ActivityItem({ item, onPress }) {
             borderRadius: 20,
           }}
         >
-          <Text style={{ fontSize: 12, color: "white", fontWeight: "600" }}>
+          <Text style={{ color: "white", fontWeight: "600", fontSize: 12 }}>
             {item.type}
           </Text>
         </View>
       </View>
 
-      {/* Status & Schedule */}
+      {/* SCHEDULE + STATUS */}
       <View style={{ marginBottom: 14 }}>
         <Text style={{ fontSize: 13, color: "#666" }}>
           {formatDate(item.schedule)}
@@ -112,7 +167,10 @@ export default function ActivityItem({ item, onPress }) {
         </Text>
       </View>
 
-      {/* MAIN CTA BUTTON */}
+      {/* LEARNER-FOCUSED DETAILS */}
+      <View style={{ marginBottom: 14 }}>{renderDetails()}</View>
+
+      {/* CTA BUTTON */}
       <Pressable
         onPress={() => onPress(item)}
         style={{
@@ -120,19 +178,19 @@ export default function ActivityItem({ item, onPress }) {
           paddingVertical: 10,
           borderRadius: 8,
 
-          // ⬇️ Platform-specific width rules
+          // responsive width
           width: Platform.select({
-            web: "auto", // button shrinks around text for desktop
-            default: "100%", // full width on mobile
+            web: "auto",
+            default: "100%",
           }),
 
           alignSelf: Platform.select({
-            web: "flex-start", // avoid stretching horizontally
+            web: "flex-start",
             default: "auto",
           }),
 
           paddingHorizontal: Platform.select({
-            web: 16, // add some left/right padding for a compact look
+            web: 16,
             default: 0,
           }),
         }}
