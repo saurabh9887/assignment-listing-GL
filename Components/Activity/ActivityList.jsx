@@ -5,7 +5,7 @@ export default function ActivityList({ activities, onPressItem }) {
   if (!activities.length)
     return (
       <View className="py-10">
-        <Text className="text-center">No activities found</Text>
+        <Text className="text-center text-gray-500">No activities found</Text>
       </View>
     );
 
@@ -16,7 +16,7 @@ export default function ActivityList({ activities, onPressItem }) {
       renderItem={({ item }) => (
         <ActivityItem item={item} onPress={onPressItem} />
       )}
-      contentContainerStyle={{ paddingBottom: 100 }}
+      contentContainerStyle={{ paddingBottom: 150 }}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
 export default function ActivityFilters({
   filters,
@@ -12,47 +12,73 @@ export default function ActivityFilters({
   return (
     <View className="mb-4">
       <TextInput
-        placeholder="Search activities"
+        placeholder="Search activities..."
         value={query}
         onChangeText={setQuery}
-        className="bg-white p-2 rounded mb-2"
+        className="bg-white p-3 rounded-lg mb-3 shadow"
+        style={{
+          borderWidth: 1,
+          borderColor: "#ddd",
+        }}
       />
 
-      {/* Type Filters */}
-      <View className="flex-row mb-2">
+      {/* Types */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {types.map((t) => (
           <Pressable
             key={t}
             onPress={() => setFilters((prev) => ({ ...prev, type: t }))}
-            className={`px-3 py-1 mr-2 rounded ${
-              filters.type === t ? "bg-black" : "bg-gray-200"
-            }`}
+            style={{
+              paddingHorizontal: 14,
+              paddingVertical: 6,
+              borderRadius: 20,
+              marginRight: 10,
+              backgroundColor:
+                filters.type === t ? "#61894d" : "rgba(0,0,0,0.06)",
+            }}
           >
-            <Text className={filters.type === t ? "text-white" : "text-black"}>
+            <Text
+              style={{
+                color: filters.type === t ? "white" : "#333",
+                fontWeight: "500",
+              }}
+            >
               {t}
             </Text>
           </Pressable>
         ))}
-      </View>
+      </ScrollView>
 
-      {/* Status Filters */}
-      <View className="flex-row">
+      {/* Status */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ marginTop: 10 }}
+      >
         {statuses.map((s) => (
           <Pressable
             key={s}
             onPress={() => setFilters((prev) => ({ ...prev, status: s }))}
-            className={`px-3 py-1 mr-2 rounded ${
-              filters.status === s ? "bg-black" : "bg-gray-200"
-            }`}
+            style={{
+              paddingHorizontal: 14,
+              paddingVertical: 6,
+              borderRadius: 20,
+              marginRight: 10,
+              backgroundColor:
+                filters.status === s ? "#61894d" : "rgba(0,0,0,0.06)",
+            }}
           >
             <Text
-              className={filters.status === s ? "text-white" : "text-black"}
+              style={{
+                color: filters.status === s ? "white" : "#333",
+                fontWeight: "500",
+              }}
             >
               {s}
             </Text>
           </Pressable>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }

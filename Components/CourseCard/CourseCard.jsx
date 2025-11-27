@@ -1,12 +1,11 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export default function CourseCard({ title, progress, onPress, image }) {
+export default function CourseCard({ title, progress, onView, image }) {
   return (
-    <TouchableOpacity
-      onPress={onPress}
+    <View
       style={{
         width: "100%",
-        height: 280, // increased height
+        height: 280,
         borderRadius: 16,
         overflow: "hidden",
         backgroundColor: "#fff",
@@ -17,7 +16,7 @@ export default function CourseCard({ title, progress, onPress, image }) {
         elevation: 5,
       }}
     >
-      {/* Image Section (70%) */}
+      {/* 70% Image */}
       <View style={{ flex: 7 }}>
         <Image
           source={image}
@@ -26,7 +25,7 @@ export default function CourseCard({ title, progress, onPress, image }) {
         />
       </View>
 
-      {/* Info Section (30%) */}
+      {/* 30% Info */}
       <View
         style={{
           flex: 3,
@@ -45,8 +44,9 @@ export default function CourseCard({ title, progress, onPress, image }) {
           </Text>
         )}
 
-        {/* Bottom-right View button */}
-        <View
+        {/* View Button */}
+        <TouchableOpacity
+          onPress={onView}
           style={{
             backgroundColor: "#61894d",
             paddingHorizontal: 12,
@@ -66,8 +66,8 @@ export default function CourseCard({ title, progress, onPress, image }) {
           >
             View
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }

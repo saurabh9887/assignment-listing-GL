@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { Platform, ScrollView, Text, View } from "react-native";
 import CourseCard from "../Components/CourseCard/CourseCard";
 
@@ -29,6 +30,7 @@ const courses = [
 ];
 
 export default function HomeScreen() {
+  const router = useRouter();
   const isWeb = Platform.OS === "web";
 
   return (
@@ -56,7 +58,12 @@ export default function HomeScreen() {
               title={course.title}
               progress={course.progress}
               image={course.image}
-              onPress={() => console.log("Clicked:", course.title)}
+              onView={() =>
+                router.push({
+                  pathname: `/course/${course.id}`,
+                  params: { title: course.title },
+                })
+              }
             />
           </View>
         ))}
