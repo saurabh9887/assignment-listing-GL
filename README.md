@@ -1,50 +1,104 @@
-# Welcome to your Expo app 👋
+Activity Listing App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform learning app built with Expo, React Native, and React Native Web, running from a single codebase on both web and mobile.
 
-## Get started
+🚀 Tech Stack
 
-1. Install dependencies
+Expo + React Native — unified mobile/web codebase
 
-   ```bash
+React Native Web — render native components on the browser
+
+Expo Router — file-based navigation
+
+Tailwind (NativeWind) — consistent and fast styling across platforms
+
+
+📌 Features
+
+Centralized activity list (Online Classes, Assignments, Quizzes, Discussions)
+
+Each activity displays:
+
+Type
+
+Title
+
+Status (Upcoming / Completed / In Progress)
+
+Schedule / Due date
+
+Obvious next action (Join Class / Start Quiz / Submit Assignment)
+
+Mark activities as completed
+
+Auto-update progress percentage
+
+Responsive UI for both web and mobile
+
+▶️ How to Run the Application Locally
+
+1. Clone the repository
+
+git clone assignment-listing-GL
+
+2. Move into the project directory
+   cd assignment-listing-GL
+
+3. Install dependencies
    npm install
-   ```
 
-2. Start the app
+4. If you encounter dependency conflicts:
+   npm install --legacy-peer-deps
 
-   ```bash
-   npx expo start
-   ```
+5. Run on Web
+   npm run web
 
-In the output, you'll find options to open the app in a
+6. Run on Android
+a. Install Expo Go from the Play Store.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+b. When you run npm run web, your terminal will display a QR code.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+c. Open Expo Go → Scan that QR code → The app loads instantly on your phone.
 
-## Get a fresh project
+🧠 Tech Choices & Tradeoffs
 
-When you're ready, run:
+Expo
 
-```bash
-npm run reset-project
-```
+Why chosen:
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+1. Zero-config environment for mobile + web
+2. Fast dev workflow
+3. Reliable builds
 
-## Learn more
+Tradeoffs:
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Slightly opinionated
+2. A few native modules need additional configuration
+3. Heavy dependency on the Expo ecosystem
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+React Native Web:
+Why chosen:
+1. True code reuse between mobile and web
+2. Reduces UI duplication
+3. Works well with Expo
 
-## Join the community
+Tradeoffs:
+1. Complex layouts might need platform-specific adjustments
 
-Join our community of developers creating universal apps.
+Expo Router
+Why chosen:
+1. File-based routing = fewer boilerplate screens
+2. Cleaner project structure
+3. Works on both mobile + web
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Tradeoffs:
+1. Requires a mental shift from React Navigation’s classic approach
+2. Folder structure must stay organized, or routing becomes messy
+   
+Tailwind (NativeWind)
+Why chosen:
+1. Fast styling
+2. Better consistency between web and mobile
+
+Tradeoffs:
+1. Classnames can get long
